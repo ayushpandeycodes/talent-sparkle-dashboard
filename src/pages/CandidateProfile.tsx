@@ -1,10 +1,17 @@
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Github, ExternalLink, MapPin, Briefcase, Award, Mail, Calendar, FileText, MessageSquare, CheckCircle2 } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { useApp } from "@/contexts/AppContext";
@@ -12,6 +19,22 @@ import { useApp } from "@/contexts/AppContext";
 export default function CandidateProfile() {
   const { id } = useParams();
   const { getCandidateById, jobs } = useApp();
+  const [showScheduleDialog, setShowScheduleDialog] = useState(false);
+  const [scheduleData, setScheduleData] = useState({
+    jobId: "",
+    date: "",
+    time: "10:00",
+    notes: "",
+  });
+
+  const handleScheduleInterview = () => {
+    if (!scheduleData.jobId || !scheduleData.date) {
+      toast.error("Please select a job and date");
+      return;
+    }
+    toast.success("Interview scheduled successfully");
+    setShowScheduleDialog(false);
+  };
 
   const candidate = getCandidateById(id || "");
 
@@ -114,7 +137,7 @@ export default function CandidateProfile() {
                     <MessageSquare className="h-4 w-4 mr-2" />
                     Send Message
                   </Button>
-                  <Button variant="outline" className="w-full">
+                  <Button variant="outline" className="w-full" onClick={() => setShowScheduleDialog(true)}>
                     <Calendar className="h-4 w-4 mr-2" />
                     Schedule Interview
                   </Button>
@@ -323,6 +346,67 @@ export default function CandidateProfile() {
           </Tabs>
         </div>
       </div>
+
+      {/* Schedule Interview Dialog */}
+      <Dialog open={showScheduleDialog} onOpenChange={setShowScheduleDialog}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle>Schedule Interview with {candidate.name}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 mt-4">
+            <div>
+              <Label>Select Job Position</Label>
+              <Select
+                value={scheduleData.jobId}
+                onValueChange={(value) => setScheduleData({ ...scheduleData, jobId: value })}
+              >
+                <SelectTrigger className="mt-2">
+                  <SelectValue placeholder="Select a job" />
+                </SelectTrigger>
+                <SelectContent>
+                  {jobs.map((job) => (
+                    <SelectItem key={job.id} value={job.id}>
+                      {job.title} - {job.city}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label>Date</Label>
+              <Input
+                type="date"
+                className="mt-2"
+                value={scheduleData.date}
+                onChange={(e) => setScheduleData({ ...scheduleData, date: e.target.value })}
+              />
+            </div>
+            <div>
+              <Label>Time</Label>
+              <Input
+                type="time"
+                className="mt-2"
+                value={scheduleData.time}
+                onChange={(e) => setScheduleData({ ...scheduleData, time: e.target.value })}
+              />
+            </div>
+            <div>
+              <Label>Notes (Optional)</Label>
+              <Textarea
+                placeholder="Add any interview notes or instructions..."
+                className="mt-2"
+                rows={3}
+                value={scheduleData.notes}
+                onChange={(e) => setScheduleData({ ...scheduleData, notes: e.target.value })}
+              />
+            </div>
+            <Button className="w-full" onClick={handleScheduleInterview}>
+              <Calendar className="h-4 w-4 mr-2" />
+              Schedule Interview
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

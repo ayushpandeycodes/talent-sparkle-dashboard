@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useApp } from "@/contexts/AppContext";
+import { toast } from "sonner";
 import { Search, Sparkles, Github, ExternalLink, MapPin, Briefcase, Award, Filter, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,7 +17,6 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { useApp } from "@/contexts/AppContext";
 import { Progress } from "@/components/ui/progress";
 
 export default function Candidates() {
@@ -24,6 +25,19 @@ export default function Candidates() {
   const [verifiedOnly, setVerifiedOnly] = useState(false);
   const [minExperience, setMinExperience] = useState<number>(0);
   const [skillFilter, setSkillFilter] = useState("all");
+  const [showAIRecommendations, setShowAIRecommendations] = useState(false);
+
+  const handleAIRecommendations = () => {
+    setShowAIRecommendations(true);
+    toast.success("AI analyzing candidates...", {
+      description: "Finding the best matches for your requirements",
+    });
+    setTimeout(() => {
+      toast.success("AI Recommendations Ready!", {
+        description: "Top 3 candidates identified based on skills and experience",
+      });
+    }, 2000);
+  };
 
   // Calculate match score (simulated)
   const calculateMatchScore = (candidate: any) => {

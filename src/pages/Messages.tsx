@@ -46,15 +46,15 @@ export default function Messages() {
     },
   ]);
 
-  const handleSendMessage = () => {
+  const handleSendEmail = () => {
     if (selectedCandidates.length === 0) {
       toast.error("Please select at least one candidate");
       return;
     }
 
     setTimeout(() => {
-      toast.success(`Message sent to ${selectedCandidates.length} candidate(s)`, {
-        description: "Messages are being delivered...",
+      toast.success(`Email sent to ${selectedCandidates.length} candidate(s)`, {
+        description: "Emails are being delivered...",
       });
       setShowComposeDialog(false);
       setSelectedCandidates([]);
@@ -86,13 +86,13 @@ export default function Messages() {
         <Dialog open={showComposeDialog} onOpenChange={setShowComposeDialog}>
           <DialogTrigger asChild>
             <Button>
-              <Plus className="h-4 w-4 mr-2" />
-              Compose Message
+              <Mail className="h-4 w-4 mr-2" />
+              Compose Email
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
-              <DialogTitle>Compose Message</DialogTitle>
+              <DialogTitle>Compose Email</DialogTitle>
             </DialogHeader>
             <div className="space-y-4 mt-4">
               <div>
@@ -182,9 +182,9 @@ export default function Messages() {
                 </div>
               )}
 
-              <Button className="w-full" onClick={handleSendMessage}>
-                <Send className="h-4 w-4 mr-2" />
-                Send Message
+              <Button className="w-full" onClick={handleSendEmail}>
+                <Mail className="h-4 w-4 mr-2" />
+                Send Email
               </Button>
             </div>
           </DialogContent>

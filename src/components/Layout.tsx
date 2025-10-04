@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { ReactNode, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Briefcase,
@@ -29,7 +29,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const navigation = [
   { name: "Overview", href: "/", icon: LayoutDashboard },
@@ -50,7 +51,55 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const location = useLocation();
+  const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showNotifications, setShowNotifications] = useState(false);
+
+  const notifications = [
+    {
+      id: 1,
+      title: "New Application",
+      message: "Sarah Chen applied for Senior Developer position",
+      time: "5 minutes ago",
+      unread: true,
+    },
+    {
+      id: 2,
+      title: "Interview Scheduled",
+      message: "Interview with Raj Kumar scheduled for tomorrow at 10 AM",
+      time: "1 hour ago",
+      unread: true,
+    },
+    {
+      id: 3,
+      title: "Application Update",
+      message: "Maria Garcia moved to final round",
+      time: "2 hours ago",
+      unread: true,
+    },
+    {
+      id: 4,
+      title: "New Message",
+      message: "You have 5 new messages from candidates",
+      time: "3 hours ago",
+      unread: false,
+    },
+    {
+      id: 5,
+      title: "Campus Drive",
+      message: "IIT Delhi campus drive starting next week",
+      time: "1 day ago",
+      unread: false,
+    },
+  ];
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/candidates?search=${encodeURIComponent(searchQuery)}`);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -128,22 +177,62 @@ export default function Layout({ children }: LayoutProps) {
         {/* Header */}
         <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-border bg-card-glass backdrop-blur-md px-6">
           <div className="flex-1 flex items-center gap-4">
-            <div className="relative w-96">
+            <form onSubmit={handleSearch} className="relative w-96">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search candidates, jobs, or applications..."
                 className="pl-10 bg-background/50"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
-            </div>
+            </form>
           </div>
 
           <div className="flex items-center gap-3">
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="h-5 w-5" />
-              <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-primary text-[10px]">
-                3
-              </Badge>
-            </Button>
+            <Popover open={showNotifications} onOpenChange={setShowNotifications}>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="icon" className="relative">
+                  <Bell className="h-5 w-5" />
+                  <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-primary text-[10px]">
+                    {notifications.filter((n) => n.unread).length}
+                  </Badge>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 p-0" align="end">
+                <div className="flex items-center justify-between p-4 border-b">
+                  <h3 className="font-semibold">Notifications</h3>
+                  <Button variant="ghost" size="sm" className="text-xs">
+                    Mark all as read
+                  </Button>
+                </div>
+                <ScrollArea className="h-[400px]">
+                  <div className="p-2">
+                    {notifications.map((notification) => (
+                      <div
+                        key={notification.id}
+                        className={cn(
+                          "p-3 rounded-lg mb-2 cursor-pointer hover:bg-muted/50 transition-colors",
+                          notification.unread && "bg-primary/5"
+                        )}
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="flex-1">
+                            <h4 className="text-sm font-medium mb-1">{notification.title}</h4>
+                            <p className="text-xs text-muted-foreground mb-1">
+                              {notification.message}
+                            </p>
+                            <p className="text-xs text-muted-foreground">{notification.time}</p>
+                          </div>
+                          {notification.unread && (
+                            <div className="w-2 h-2 rounded-full bg-primary mt-1" />
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </ScrollArea>
+              </PopoverContent>
+            </Popover>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

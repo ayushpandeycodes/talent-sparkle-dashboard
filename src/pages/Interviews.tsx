@@ -23,6 +23,13 @@ export default function Interviews() {
   const { interviews, addInterview, candidates, jobs } = useApp();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showNewInterviewDialog, setShowNewInterviewDialog] = useState(false);
+  const [rescheduleDialog, setRescheduleDialog] = useState(false);
+  const [rescheduleInterview, setRescheduleInterview] = useState<any>(null);
+  const [newRescheduleData, setNewRescheduleData] = useState({
+    date: "",
+    time: "",
+    reason: "",
+  });
   const [newInterview, setNewInterview] = useState({
     candidateId: "",
     jobId: "",
@@ -76,6 +83,31 @@ export default function Interviews() {
       interviewers: "",
       notes: "",
     });
+  };
+
+  const handleReschedule = (interview: any) => {
+    const interviewDate = new Date(interview.scheduledAt);
+    setRescheduleInterview(interview);
+    setNewRescheduleData({
+      date: interviewDate.toISOString().split('T')[0],
+      time: format(interviewDate, 'HH:mm'),
+      reason: "",
+    });
+    setRescheduleDialog(true);
+  };
+
+  const confirmReschedule = () => {
+    if (!newRescheduleData.date || !newRescheduleData.time) {
+      toast.error("Please select a new date and time");
+      return;
+    }
+    
+    const candidate = candidates.find((c) => c.id === rescheduleInterview?.candidateId);
+    toast.success(`Interview rescheduled with ${candidate?.name}`, {
+      description: `New time: ${format(new Date(`${newRescheduleData.date}T${newRescheduleData.time}`), 'MMM dd, yyyy hh:mm a')}`,
+    });
+    setRescheduleDialog(false);
+    setRescheduleInterview(null);
   };
 
   const upcomingInterviews = interviews
@@ -335,7 +367,7 @@ export default function Interviews() {
                         <Video className="h-4 w-4 mr-2" />
                         Join
                       </Button>
-                      <Button size="sm" variant="outline">
+                      <Button size="sm" variant="outline" onClick={() => handleReschedule(interview)}>
                         Reschedule
                       </Button>
                     </div>
@@ -346,6 +378,58 @@ export default function Interviews() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Reschedule Dialog */}
+      <Dialog open={rescheduleDialog} onOpenChange={setRescheduleDialog}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle>Reschedule Interview</DialogTitle>
+          </DialogHeader>
+          {rescheduleInterview && (
+            <div className="space-y-4 mt-4">
+              <div>
+                <Label>Current Date & Time</Label>
+                <Input
+                  value={format(new Date(rescheduleInterview.scheduledAt), 'MMM dd, yyyy hh:mm a')}
+                  disabled
+                  className="mt-2"
+                />
+              </div>
+              <div>
+                <Label>New Date</Label>
+                <Input
+                  type="date"
+                  className="mt-2"
+                  value={newRescheduleData.date}
+                  onChange={(e) => setNewRescheduleData({ ...newRescheduleData, date: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label>New Time</Label>
+                <Input
+                  type="time"
+                  className="mt-2"
+                  value={newRescheduleData.time}
+                  onChange={(e) => setNewRescheduleData({ ...newRescheduleData, time: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label>Reason (Optional)</Label>
+                <Textarea
+                  placeholder="Provide a reason for rescheduling..."
+                  className="mt-2"
+                  rows={3}
+                  value={newRescheduleData.reason}
+                  onChange={(e) => setNewRescheduleData({ ...newRescheduleData, reason: e.target.value })}
+                />
+              </div>
+              <Button className="w-full" onClick={confirmReschedule}>
+                Confirm Reschedule
+              </Button>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
