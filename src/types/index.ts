@@ -1,6 +1,6 @@
 export type JobStatus = "open" | "paused" | "closed";
 export type JobLocation = "remote" | "hybrid" | "onsite";
-export type Seniority = "intern" | "entry" | "mid" | "senior" | "lead";
+export type Seniority = "intern" | "entry" | "mid" | "senior" | "lead" | "executive";
 export type ApplicationStage = "applied" | "screening" | "phone_screen" | "interview" | "assessment" | "offer" | "hired" | "rejected";
 export type Priority = "low" | "medium" | "high";
 
@@ -9,14 +9,18 @@ export interface Job {
   title: string;
   location: JobLocation;
   city: string;
+  country?: string;
   salaryRange: string;
-  seniority: Seniority;
-  team: string;
+  seniority: string;
+  department: string;
+  team?: string;
   tags: string[];
   description: string;
-  screeningQuestions: ScreeningQuestion[];
-  deadline: string;
-  campuses: string[];
+  requirements: string[];
+  benefits: string[];
+  screeningQuestions?: string[];
+  deadline?: string;
+  campuses?: string[];
   status: JobStatus;
   postedDate: string;
   applicantCount: number;

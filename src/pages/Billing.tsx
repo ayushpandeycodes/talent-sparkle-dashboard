@@ -28,7 +28,7 @@ const plans = [
   },
   {
     name: "Premium",
-    price: 999,
+    price: 99,
     description: "For growing teams",
     icon: Zap,
     popular: true,
@@ -47,7 +47,7 @@ const plans = [
   },
   {
     name: "Enterprise",
-    price: 2499,
+    price: 249,
     description: "For large organizations",
     icon: Crown,
     features: [
@@ -93,12 +93,12 @@ export default function Billing() {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-6 animate-fade-in">
       {/* Header */}
-      <div className="text-center max-w-2xl mx-auto">
-        <h1 className="text-4xl font-bold mb-3">Choose Your Plan</h1>
-        <p className="text-muted-foreground text-lg">
-          Scale your hiring with plans designed for teams of all sizes
+      <div>
+        <h1 className="text-3xl font-bold mb-2">Billing & Plans</h1>
+        <p className="text-muted-foreground">
+          Choose the perfect plan for your hiring needs
         </p>
       </div>
 

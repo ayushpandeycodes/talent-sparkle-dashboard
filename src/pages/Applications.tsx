@@ -102,6 +102,30 @@ export default function Applications() {
         <div>
           <h1 className="text-3xl font-bold">Applications</h1>
           <p className="text-muted-foreground mt-1">
+            Track and manage all applicants across jobs
+          </p>
+        </div>
+        <div className="flex gap-3">
+          <Card className="glass-card">
+            <CardContent className="p-3 flex items-center gap-3">
+              <div className="text-2xl font-bold text-primary">{allApplications.length}</div>
+              <div className="text-xs text-muted-foreground">Total<br />Applications</div>
+            </CardContent>
+          </Card>
+          <Card className="glass-card">
+            <CardContent className="p-3 flex items-center gap-3">
+              <div className="text-2xl font-bold text-success">{stageStats.find(s => s.stage === 'hired')?.count || 0}</div>
+              <div className="text-xs text-muted-foreground">Total<br />Hired</div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      {/* Header (original) */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold">Applications</h1>
+          <p className="text-muted-foreground mt-1">
             Track and manage all applications across your job postings
           </p>
         </div>

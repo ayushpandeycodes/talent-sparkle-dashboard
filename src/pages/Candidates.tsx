@@ -62,14 +62,14 @@ export default function Candidates() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Candidate Discovery</h1>
+          <h1 className="text-3xl font-bold">Discover Talent</h1>
           <p className="text-muted-foreground mt-1">
-            AI-powered talent matching and search
+            AI-powered candidate discovery with smart matching
           </p>
         </div>
-        <Button variant="outline" className="gap-2">
-          <Sparkles className="h-4 w-4" />
-          AI Recommendations
+        <Button size="lg" className="gap-2 shadow-lg">
+          <span className="text-xl">🎯</span>
+          Get AI Recommendations
         </Button>
       </div>
 

@@ -17,9 +17,9 @@ import Interviews from "./pages/Interviews";
 import Messages from "./pages/Messages";
 import Campus from "./pages/Campus";
 import Settings from "./pages/Settings";
-import PlaceholderPage from "./pages/PlaceholderPage";
+import PostJob from "./pages/PostJob";
+import Help from "./pages/Help";
 import NotFound from "./pages/NotFound";
-import { HelpCircle } from "lucide-react";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +34,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/jobs" element={<Jobs />} />
+              <Route path="/jobs/new" element={<PostJob />} />
               <Route path="/jobs/:id" element={<JobDetail />} />
               <Route path="/candidates" element={<Candidates />} />
               <Route path="/candidate/:id" element={<CandidateProfile />} />
@@ -44,13 +45,7 @@ const App = () => (
               <Route path="/analytics" element={<Analytics />} />
               <Route path="/billing" element={<Billing />} />
               <Route path="/settings" element={<Settings />} />
-              <Route path="/help" element={
-                <PlaceholderPage
-                  title="Help & Demo"
-                  description="Learn how to use Jobplexity with interactive demos"
-                  icon={<HelpCircle className="h-8 w-8 text-primary" />}
-                />
-              } />
+              <Route path="/help" element={<Help />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
