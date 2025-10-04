@@ -15,11 +15,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const stageOrder: ApplicationStage[] = ["applied", "phone_screen", "interview", "offer", "hired", "rejected"];
+const stageOrder: ApplicationStage[] = ["applied", "screening", "phone_screen", "interview", "assessment", "offer", "hired", "rejected"];
 const stageLabels: Record<ApplicationStage, string> = {
   applied: "Applied",
+  screening: "Screening",
   phone_screen: "Phone Screen",
   interview: "Interview",
+  assessment: "Assessment",
   offer: "Offer",
   hired: "Hired",
   rejected: "Rejected",
@@ -27,8 +29,10 @@ const stageLabels: Record<ApplicationStage, string> = {
 
 const stageColors: Record<ApplicationStage, string> = {
   applied: "bg-blue-500/10 text-blue-600 border-blue-500/20",
+  screening: "bg-yellow-500/10 text-yellow-600 border-yellow-500/20",
   phone_screen: "bg-purple-500/10 text-purple-600 border-purple-500/20",
   interview: "bg-amber-500/10 text-amber-600 border-amber-500/20",
+  assessment: "bg-orange-500/10 text-orange-600 border-orange-500/20",
   offer: "bg-green-500/10 text-green-600 border-green-500/20",
   hired: "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
   rejected: "bg-gray-500/10 text-gray-600 border-gray-500/20",
@@ -57,8 +61,10 @@ export default function JobDetail() {
 
   const candidatesByStage: Record<ApplicationStage, typeof candidates> = {
     applied: [],
+    screening: [],
     phone_screen: [],
     interview: [],
+    assessment: [],
     offer: [],
     hired: [],
     rejected: [],

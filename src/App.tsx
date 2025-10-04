@@ -12,9 +12,14 @@ import Candidates from "./pages/Candidates";
 import CandidateProfile from "./pages/CandidateProfile";
 import Analytics from "./pages/Analytics";
 import Billing from "./pages/Billing";
+import Applications from "./pages/Applications";
+import Interviews from "./pages/Interviews";
+import Messages from "./pages/Messages";
+import Campus from "./pages/Campus";
+import Settings from "./pages/Settings";
 import PlaceholderPage from "./pages/PlaceholderPage";
 import NotFound from "./pages/NotFound";
-import { Calendar, FileText, MessageSquare, GraduationCap, Settings, HelpCircle } from "lucide-react";
+import { HelpCircle } from "lucide-react";
 
 const queryClient = new QueryClient();
 
@@ -32,43 +37,13 @@ const App = () => (
               <Route path="/jobs/:id" element={<JobDetail />} />
               <Route path="/candidates" element={<Candidates />} />
               <Route path="/candidate/:id" element={<CandidateProfile />} />
-              <Route path="/applications" element={
-                <PlaceholderPage
-                  title="Applications"
-                  description="View and manage all applications across jobs"
-                  icon={<FileText className="h-8 w-8 text-primary" />}
-                />
-              } />
-              <Route path="/interviews" element={
-                <PlaceholderPage
-                  title="Interview Scheduler"
-                  description="Schedule and manage interviews with candidates"
-                  icon={<Calendar className="h-8 w-8 text-primary" />}
-                />
-              } />
-              <Route path="/messages" element={
-                <PlaceholderPage
-                  title="Messages"
-                  description="Communicate with candidates using templates and bulk messaging"
-                  icon={<MessageSquare className="h-8 w-8 text-primary" />}
-                />
-              } />
-              <Route path="/campus" element={
-                <PlaceholderPage
-                  title="Campus Drives"
-                  description="Connect with universities and manage campus recruitment"
-                  icon={<GraduationCap className="h-8 w-8 text-primary" />}
-                />
-              } />
+              <Route path="/applications" element={<Applications />} />
+              <Route path="/interviews" element={<Interviews />} />
+              <Route path="/messages" element={<Messages />} />
+              <Route path="/campus" element={<Campus />} />
               <Route path="/analytics" element={<Analytics />} />
               <Route path="/billing" element={<Billing />} />
-              <Route path="/settings" element={
-                <PlaceholderPage
-                  title="Settings"
-                  description="Manage your account, team, and preferences"
-                  icon={<Settings className="h-8 w-8 text-primary" />}
-                />
-              } />
+              <Route path="/settings" element={<Settings />} />
               <Route path="/help" element={
                 <PlaceholderPage
                   title="Help & Demo"

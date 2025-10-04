@@ -28,7 +28,7 @@ const plans = [
   },
   {
     name: "Premium",
-    price: 199,
+    price: 999,
     description: "For growing teams",
     icon: Zap,
     popular: true,
@@ -47,7 +47,7 @@ const plans = [
   },
   {
     name: "Enterprise",
-    price: 499,
+    price: 2499,
     description: "For large organizations",
     icon: Crown,
     features: [
@@ -84,12 +84,12 @@ export default function Billing() {
   };
 
   const getPrice = (basePrice: number) => {
-    if (basePrice === 0) return "$0";
+    if (basePrice === 0) return "₹0";
     if (billingCycle === "annual") {
       const annualPrice = Math.round(basePrice * 12 * 0.8); // 20% discount
-      return `$${annualPrice}`;
+      return `₹${annualPrice.toLocaleString("en-IN")}`;
     }
-    return `$${basePrice}`;
+    return `₹${basePrice.toLocaleString("en-IN")}`;
   };
 
   return (
@@ -161,7 +161,7 @@ export default function Billing() {
                   </div>
                   {billingCycle === "annual" && plan.price > 0 && (
                     <p className="text-xs text-muted-foreground mt-1">
-                      ${plan.price}/month billed annually
+                      ₹{plan.price.toLocaleString("en-IN")}/month billed annually
                     </p>
                   )}
                 </div>

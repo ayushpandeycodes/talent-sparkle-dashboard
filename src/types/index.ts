@@ -1,7 +1,7 @@
 export type JobStatus = "open" | "paused" | "closed";
 export type JobLocation = "remote" | "hybrid" | "onsite";
 export type Seniority = "intern" | "entry" | "mid" | "senior" | "lead";
-export type ApplicationStage = "applied" | "phone_screen" | "interview" | "offer" | "hired" | "rejected";
+export type ApplicationStage = "applied" | "screening" | "phone_screen" | "interview" | "assessment" | "offer" | "hired" | "rejected";
 export type Priority = "low" | "medium" | "high";
 
 export interface Job {
@@ -62,6 +62,8 @@ export interface University {
   domain: string;
   cohortSize: number;
   location: string;
+  studentCount: number;
+  tier: "Tier 1" | "Tier 2" | "Tier 3";
 }
 
 export interface MessageTemplate {
@@ -69,6 +71,7 @@ export interface MessageTemplate {
   name: string;
   subject: string;
   body: string;
+  content: string;
   category: "outreach" | "interview" | "rejection" | "campus";
 }
 
@@ -77,8 +80,9 @@ export interface Interview {
   candidateId: string;
   jobId: string;
   date: string;
+  scheduledAt: string;
   duration: number;
-  type: "phone" | "technical" | "onsite";
+  type: "phone" | "video" | "technical" | "onsite";
   interviewers: string[];
   status: "scheduled" | "completed" | "cancelled";
   notes?: string;
@@ -90,11 +94,14 @@ export interface CampusDrive {
   universityId: string;
   jobIds: string[];
   deadline: string;
+  scheduledDate: string;
   seatsAvailable: number;
+  slots: number;
+  location?: string;
   applicants: number;
   interviewed: number;
   offered: number;
-  status: "draft" | "active" | "closed";
+  status: "draft" | "active" | "closed" | "scheduled" | "completed";
 }
 
 export interface ActivityLog {
