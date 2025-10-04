@@ -23,7 +23,7 @@ export default function Candidates() {
   const [searchQuery, setSearchQuery] = useState("");
   const [verifiedOnly, setVerifiedOnly] = useState(false);
   const [minExperience, setMinExperience] = useState<number>(0);
-  const [skillFilter, setSkillFilter] = useState("");
+  const [skillFilter, setSkillFilter] = useState("all");
 
   // Calculate match score (simulated)
   const calculateMatchScore = (candidate: any) => {
@@ -42,7 +42,7 @@ export default function Candidates() {
       const matchesVerified = !verifiedOnly || candidate.verifiedTalent;
       const matchesExperience = candidate.yearsExperience >= minExperience;
       const matchesSkill =
-        !skillFilter ||
+        skillFilter === "all" ||
         candidate.skills.some((skill) => skill.toLowerCase().includes(skillFilter.toLowerCase()));
       return matchesSearch && matchesVerified && matchesExperience && matchesSkill;
     })
@@ -110,7 +110,7 @@ export default function Candidates() {
                   <SelectValue placeholder="All Skills" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Skills</SelectItem>
+                  <SelectItem value="all">All Skills</SelectItem>
                   {allSkills.slice(0, 10).map((skill) => (
                     <SelectItem key={skill} value={skill}>
                       {skill}
