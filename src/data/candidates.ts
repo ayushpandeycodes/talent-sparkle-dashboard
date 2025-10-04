@@ -1,8 +1,8 @@
 import { Candidate } from "@/types";
 
-const firstNames = ["Alex", "Jordan", "Sam", "Morgan", "Casey", "Riley", "Taylor", "Drew", "Avery", "Peyton", "Jamie", "Quinn", "Blake", "Cameron", "Dakota", "Reese", "Skylar", "Parker", "Kendall", "Rowan", "Sage", "River", "Phoenix", "Emerson", "Finley"];
-const lastNames = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", "Martin", "Lee", "Walker", "Hall", "Allen", "Young"];
-const cities = ["San Francisco", "New York", "Austin", "Seattle", "Boston", "Los Angeles", "Chicago", "Denver", "Miami", "Portland"];
+const firstNames = ["Aarav", "Vivaan", "Aditya", "Vihaan", "Arjun", "Sai", "Reyansh", "Ayaan", "Krishna", "Ishaan", "Shaurya", "Atharv", "Advait", "Pranav", "Aadhya", "Ananya", "Saanvi", "Diya", "Kiara", "Isha", "Kavya", "Priya", "Riya", "Nisha", "Shreya"];
+const lastNames = ["Sharma", "Patel", "Kumar", "Singh", "Gupta", "Reddy", "Mehta", "Verma", "Iyer", "Nair", "Malhotra", "Desai", "Joshi", "Rao", "Agarwal", "Shah", "Kapoor", "Kulkarni", "Chopra", "Banerjee", "Chatterjee", "Pillai", "Bhat", "Shetty", "Menon"];
+const cities = ["Mumbai", "Bangalore", "Delhi", "Hyderabad", "Pune", "Chennai", "Kolkata", "Ahmedabad", "Gurgaon", "Noida"];
 const skillSets = [
   ["React", "TypeScript", "Node.js", "PostgreSQL"],
   ["Python", "Django", "AWS", "Docker"],
@@ -27,16 +27,16 @@ const skillSets = [
 ];
 
 const educationOptions = [
-  "B.S. Computer Science, Stanford University",
-  "B.A. Business Administration, UC Berkeley",
-  "B.S. Engineering, MIT",
-  "M.S. Data Science, Georgia Tech",
-  "B.A. Marketing, NYU",
-  "B.S. Information Systems, University of Washington",
-  "M.B.A., Harvard Business School",
-  "B.S. Mathematics, Caltech",
-  "B.A. Design, Rhode Island School of Design",
-  "B.S. Computer Engineering, Carnegie Mellon"
+  "B.Tech Computer Science, IIT Bombay",
+  "B.Tech Engineering, IIT Delhi",
+  "B.E. Computer Science, BITS Pilani",
+  "M.Tech Data Science, IIT Madras",
+  "B.Com Business Administration, Delhi University",
+  "B.Tech Information Technology, NIT Trichy",
+  "MBA, IIM Ahmedabad",
+  "B.Sc Mathematics, St. Xavier's College Mumbai",
+  "B.Des Design, NID Ahmedabad",
+  "B.Tech Computer Engineering, IIT Kanpur"
 ];
 
 function generateResumeText(name: string, skills: string[], experience: number): string {
@@ -115,7 +115,7 @@ export function generateCandidates(count: number = 100): Candidate[] {
       name,
       email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@email.com`,
       headline: `${skills[0]} Developer`,
-      location: `${cities[i % cities.length]}, USA`,
+      location: `${cities[i % cities.length]}, India`,
       skills,
       yearsExperience,
       education: educationOptions[i % educationOptions.length],
